@@ -34,7 +34,7 @@ void main( void ) {
 		for (int y = 0; y < kernelSize.y; y++) {
 			vec2 offset = vec2(x - floor(kernelSize.x/2.), y - floor(kernelSize.y/2.));
 			// float kernelValue = kernel[x * kernelSize.x + y];
-			float kernelValue = texture2D(kernel, vec2(kernelSize.x - x - 0.5, kernelSize.y - y - 0.5) / kernelSize).g * 2 - 1;
+			float kernelValue = texture2D(kernel, vec2(kernelSize.x - x - 0.5, kernelSize.y - y - 0.5) / kernelSize).g * 10 - 5;
 			sum += texture2D(ppixels, position + pixel * offset).g * kernelValue;
 		}
 	}
@@ -44,7 +44,7 @@ void main( void ) {
 
 	drawLayerPixel = b > 0.5 ? vec4(1,1,1,1) : vec4(0,0,0,0);
 
-	if (me.g == 0 && sum > threshold) {
+	if (me.g == 0 && sum > position.y * 5) {
 		gl_FragColor = live + drawLayerPixel;
 	} else {
 		gl_FragColor = dead + drawLayerPixel;

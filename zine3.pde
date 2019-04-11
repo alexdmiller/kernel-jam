@@ -5,17 +5,14 @@ PShader conway;
 PGraphics mainCanvas;
 PGraphics drawLayer;
 
-int scale = 3;
+int scale = 1;
 int rectSize = 5;
 boolean flicker = true;
 int threshold = 1;
-
 ControlP5 cp5;
-
 Kernel kernel;
 
 int LEFT_MARGIN = 200;
-
 
 void setup() {
   fullScreen(OPENGL);
@@ -32,7 +29,7 @@ void setup() {
   drawLayer = createGraphics(mainCanvas.width, mainCanvas.height, P2D);
   drawLayer.noSmooth();
   
-  kernel = new Kernel(10);
+  kernel = new Kernel(5);
   kernel.setPosition(10, 10);
 
   conway = loadShader("conway.glsl");
@@ -61,14 +58,19 @@ void draw() {
     float y = map(mouseY, 0, height, 1, 0);
 
     drawLayer.beginDraw();
-    //drawLayer.background(0);
+    drawLayer.fill(0, 20);
+    drawLayer.rect(0, 0, drawLayer.width * 2, drawLayer.height * 2);
+    
+    drawLayer.fill(255);
+    drawLayer.ellipse(drawLayer.width /2 + sin(frameCount / 100f) * 100, drawLayer.height / 2 + cos(frameCount / 100f) * 100, 10, 10);
+    
     
     if (mousePressed) {
       if (mouseX > LEFT_MARGIN) {
         drawLayer.rectMode(CENTER);
         drawLayer.fill(255);
         drawLayer.noStroke();
-        drawLayer.rect((mouseX - LEFT_MARGIN) / scale, mouseY/scale, rectSize, 3);
+        drawLayer.rect((mouseX - LEFT_MARGIN) / scale, mouseY/scale, 3, 3);
       }
     }
     
